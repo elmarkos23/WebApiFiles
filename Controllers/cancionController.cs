@@ -8,8 +8,10 @@ using System.Web.Http;
 
 namespace WebApiFiles.Controllers
 {
+    //[RoutePrefix("api/cancion")] // Prefijo para llamar al controlador
     public class cancionController : ApiController
     {
+        [Route("Post/")]
         [HttpPost]
         public HttpResponseMessage Post(Models.cancion objcancion)
         {
@@ -22,6 +24,51 @@ namespace WebApiFiles.Controllers
 
                 //ya en el objeto lo puedes grabar en el servidor, este ejemplo lo hice en el mismo computador o lo podrias ahcer desde el movil o algo asi
                 File.WriteAllBytes("c://"+obj.nombre+".mp3", obj.archivo);
+
+
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, objcancion);
+                return response;
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+        }
+        [Route("Post2/")]
+        [HttpPost]
+        public HttpResponseMessage Post2(Models.cancion objcancion)
+        {
+            if (objcancion != null)
+            {
+                //archivo de musica que quieres enviar a la web api
+                var bytes = File.ReadAllBytes("d://yanki.mp3");
+
+                Models.cancion obj = new Models.cancion() { id = 1, archivo = bytes, nombre = "super cancion" };
+
+                //ya en el objeto lo puedes grabar en el servidor, este ejemplo lo hice en el mismo computador o lo podrias ahcer desde el movil o algo asi
+                File.WriteAllBytes("c://" + obj.nombre + ".mp3", obj.archivo);
+
+
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, objcancion);
+                return response;
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+        }
+        [HttpPost]
+        public HttpResponseMessage Post3(Models.cancion objcancion)
+        {
+            if (objcancion != null)
+            {
+                //archivo de musica que quieres enviar a la web api
+                var bytes = File.ReadAllBytes("d://yanki.mp3");
+
+                Models.cancion obj = new Models.cancion() { id = 1, archivo = bytes, nombre = "super cancion" };
+
+                //ya en el objeto lo puedes grabar en el servidor, este ejemplo lo hice en el mismo computador o lo podrias ahcer desde el movil o algo asi
+                File.WriteAllBytes("c://" + obj.nombre + ".mp3", obj.archivo);
 
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, objcancion);
